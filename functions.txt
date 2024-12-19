@@ -1,0 +1,166 @@
+#functions
+fun foo(
+    bar: Int = 0,
+    baz: Int = 1,
+    qux: () -> Unit,
+) {
+    println("bar = $bar, baz = $baz")
+    qux()
+}
+
+fun main() {
+    foo(1) { println("hello") }     // bar = 1, baz = 1, prints "hello"
+    foo(qux = { println("hello") }) // bar = 0, baz = 1, prints "hello"
+    foo { println("hello") }        // bar = 0, baz = 1, prints "hello"
+}
+// functions
+fun <T> asList(vararg ts: T): List<T> {
+    val result = ArrayList<T>()
+    for (t in ts) {
+        result.add(t) // Add each element to the list
+    }
+    return result
+}
+output:bar = 1, baz = 1
+hello
+bar = 0, baz = 1
+hello
+bar = 0, baz = 1
+hello
+fun main() {
+    // Example 1: Integer List
+    val intList = asList(10, 20, 30, 40)
+    println(intList) // Output: [10, 20, 30, 40]
+
+    // Example 2: String List
+    val stringList = asList("Kotlin", "Java", "Python")
+    println(stringList) // Output: [Kotlin, Java, Python]
+
+    // Example 3: Mixed Types
+    val mixedList = asList(1, "Kotlin", 3.14, true)
+    println(mixedList) // Output: [1, Kotlin, 3.14, true]
+
+    // Example 4: Explicitly Specified Type
+    val doubleList = asList<Double>(1.1, 2.2, 3.3)
+    println(doubleList) // Output: [1.1, 2.2, 3.3]
+}
+Output:[10, 20, 30, 40]
+[Kotlin, Java, Python]
+[1, Kotlin, 3.14, true]
+[1.1, 2.2, 3.3]
+
+fun main() {
+    val result = 1 shl 2
+    println(result)   Output: 4
+}
+// local functions
+fun outerFunction(x: Int, y: Int): Int {
+    // Local function
+    fun add(a: Int, b: Int): Int {
+        return a + b
+    }
+
+    // Using the local function
+    return add(x, y)
+}
+
+fun main() {
+    val result = outerFunction(3, 4)
+    println(result) // Output: 7
+}
+Output:7
+// member functions
+class Calculator {
+    // Member function
+    fun add(a: Int, b: Int): Int {
+        return a + b
+    }
+
+    // Member function
+    fun multiply(a: Int, b: Int): Int {
+        return a * b
+    }
+}
+
+fun main() {
+    val calculator = Calculator()
+    
+    // Calling member functions
+    val sum = calculator.add(3, 4)
+    val product = calculator.multiply(3, 4)
+    
+    println("Sum: $sum") // Output: Sum: 7
+    println("Product: $product") // Output: Product: 12
+}
+Sum: 7
+Product: 12
+// generic functions
+fun <T> printList(items: List<T>) {
+    for (item in items) {
+        println(item)
+    }
+}
+
+fun main() {
+    // Calling the generic function with different types
+    printList(listOf(1, 2, 3))       // Output: 1 2 3
+    printList(listOf("a", "b", "c")) // Output: a b c
+}
+output:1
+2
+3
+a
+b
+c
+// rec functions
+tailrec fun factorial(n: Int, acc: Int = 1): Int {
+    return if (n == 0) acc else factorial(n - 1, n * acc)
+}
+
+fun main() {
+    println(factorial(5)) // Output: 120
+}
+output:120
+//higher ordder  functions
+fun main() {
+    val numbers = listOf(1, 2, 3, 4, 5)
+
+    // Using map to square each number
+    val squaredNumbers = numbers.map { it * it }
+    println(squaredNumbers) // Output: [1, 4, 9, 16, 25]
+
+    // Using filter to get only even numbers
+    val evenNumbers = numbers.filter { it % 2 == 0 }
+    println(evenNumbers) // Output: [2, 4]
+
+    // Using reduce to sum all numbers
+    val sum = numbers.reduce { acc, num -> acc + num }
+    println(sum) // Output: 15
+}
+Output:
+[1, 4, 9, 16, 25]
+[2, 4]
+15
+#lambada
+fun main() {
+    // Defining a lambda that adds two numbers
+    val add = { a: Int, b: Int -> a + b }
+
+    // Calling the lambda
+    val sum = add(3, 4)
+    println(sum) // Output: 7
+}
+#lamada with higher order function 
+fun performOperation(a: Int, b: Int, operation: (Int, Int) -> Int): Int {
+    return operation(a, b)
+}
+
+fun main() {
+    // Defining a lambda to add numbers
+    val add = { x: Int, y: Int -> x + y }
+
+    // Calling the higher-order function with the lambda
+    val result = performOperation(3, 5, add)
+    println(result) // Output: 8
+}
+
